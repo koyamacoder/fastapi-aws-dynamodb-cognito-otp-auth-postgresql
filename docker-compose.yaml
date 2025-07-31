@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: trucost
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: trucost_central
+      MYSQL_USER: trucost
+      MYSQL_PASSWORD: trucost
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.summary/init:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - mysql
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
+  mysql_data:

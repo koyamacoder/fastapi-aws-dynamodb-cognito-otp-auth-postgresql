@@ -1,0 +1,23 @@
+name: Trucost
+version: 0.1.0
+description: Save cloud costs
+author: Vivek Baraiya
+# scopes: # for future use
+#   - openid
+#   - email
+#   - profile
+settings:
+  env: dev
+  cors_origins:
+    - http://localhost:3000
+    - http://localhost:3001
+    - http://localhost:3002
+    - http://localhost:3003
+    - https://colt-fancy-monster.ngrok-free.app
+  db_host: localhost
+  db_port: 5432
+  db_user: postgres
+  db_password: postgres
+  db_name: trucost
+  db_schema: public
+  aws_region_name: ap-south-1
